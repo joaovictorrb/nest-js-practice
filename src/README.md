@@ -26,10 +26,10 @@ The @Controller decorator can take a host option to require that the HTTP host o
 ```ts
 @Controller({ host: 'admin.example.com' })
 export class AdminController {
-  @Get()
-  index(): string {
-    return 'Admin page';
-  }
+    @Get()
+    index(): string {
+        return 'Admin page';
+    }
 }
 ```
 
@@ -40,10 +40,10 @@ Similar to a route path, the hosts option can use tokens to capture the dynamic 
 ```ts
 @Controller({ host: ':account.example.com' })
 export class AccountController {
-  @Get()
-  getInfo(@HostParam('account') account: string) {
-    return account;
-  }
+    @Get()
+    getInfo(@HostParam('account') account: string) {
+        return account;
+    }
 }
 ```
 
@@ -57,6 +57,14 @@ Our previous example of the POST route handler didn't accept any client params. 
 
 But first (if you use TypeScript), we need to determine the DTO (Data Transfer Object) schema.
 
-- A DTO is an object that defines how the data will be sent over the network.
+-   A DTO is an object that defines how the data will be sent over the network.
 
 We could determine the DTO schema by using TypeScript interfaces, or by simple classes. Interestingly, we recommend using classes here. Why? Classes are part of the JavaScript ES6 standard, and therefore they are preserved as real entities in the compiled JavaScript. On the other hand, since TypeScript interfaces are removed during the transpilation, Nest can't refer to them at runtime. This is important because features such as Pipes enable additional possibilities when they have access to the metatype of the variable at runtime.
+
+## Learn SOLID principles
+
+https://en.wikipedia.org/wiki/SOLID (docs recommended this url)
+
+## Property-based injection#
+
+The technique we've used so far is called constructor-based injection, as providers are injected via the constructor method. In some very specific cases, property-based injection might be useful. For instance, if your top-level class depends on either one or multiple providers, passing them all the way up by calling super() in sub-classes from the constructor can be very tedious. In order to avoid this, you can use the @Inject() decorator at the property level.

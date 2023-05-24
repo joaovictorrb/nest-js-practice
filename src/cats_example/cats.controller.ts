@@ -7,16 +7,19 @@ import {
     Param,
     Delete,
     Req,
+    Optional,
 } from '@nestjs/common';
-import { CatsExampleService } from './cats.service';
+import { CatsService } from './cats.service';
 import { CreateCatsExampleDto } from './dto/create-cats.dto';
 import { UpdateCatsExampleDto } from './dto/update-cats.dto';
-import { CatExample } from './interfaces/cat.interface';
+import { Cat } from './interfaces/cat.interface';
 
-@Controller('cats-example') // <- Prefix http://localhost:3000/cats-example
-export class CatsExampleController {
+@Controller('cats') // <- Prefix http://localhost:3000/cats-example
+export class CatsController {
     // Provider injected
-    constructor(private readonly catsExampleService: CatsExampleService) {}
+    constructor(@Optional() private readonly catsService: CatsService) {}
+
+    //constructor(@Optional() private readonly catsService: CatsService) {}
 
     @Post()
     /**
@@ -25,17 +28,17 @@ export class CatsExampleController {
      * and it must obey it's properties
      */
     async create(@Body() createCatBody: CreateCatsExampleDto) {
-        return this.catsExampleService.create(createCatBody);
+        return this.catsService.create(createCatBody);
     }
 
     @Get() //By using @Req, I am using Library-Specific == express
-    async findAll(@Req() request: Request): Promise<CatExample[]> {
-        return this.catsExampleService.findAll();
+    async findAll(@Req() request: Request): Promise<Cat[]> {
+        return this.catsService.findAll();
     }
 
     @Get(':id') // <- Prefix http://localhost:3000/cats-example:id
     async findOne(@Param('id') id: string) {
-        return this.catsExampleService.findOne(+id);
+        return this.catsService.findOne(+id);
     }
 
     @Patch(':id')
@@ -43,11 +46,11 @@ export class CatsExampleController {
         @Param('id') id: string,
         @Body() updateCatsExampleDto: UpdateCatsExampleDto,
     ) {
-        return this.catsExampleService.update(+id, updateCatsExampleDto);
+        return this.catsService.update(+id, updateCatsExampleDto);
     }
 
     @Delete(':id')
     async remove(@Param('id') id: string) {
-        return this.catsExampleService.remove(+id);
+        return this.catsService.remove(+id);
     }
 }

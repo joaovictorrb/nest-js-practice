@@ -1,6 +1,6 @@
-export interface CatExample {
-  name: string;
-  age: number;
-  breed: string;
-  colorPattern: string;
+export interface Cat {
+    name: string;
+    age: number;
+    breed: string;
+    colorPattern: string;
 }
