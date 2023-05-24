@@ -8,9 +8,9 @@ import {
     Delete,
     Req,
 } from '@nestjs/common';
-import { CatsExampleService } from './cats_example.service';
-import { CreateCatsExampleDto } from './dto/create-cats_example.dto';
-import { UpdateCatsExampleDto } from './dto/update-cats_example.dto';
+import { CatsExampleService } from './cats.service';
+import { CreateCatsExampleDto } from './dto/create-cats.dto';
+import { UpdateCatsExampleDto } from './dto/update-cats.dto';
 import { CatExample } from './interfaces/cat.interface';
 
 @Controller('cats-example') // <- Prefix http://localhost:3000/cats-example
