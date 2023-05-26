@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCatsExampleDto } from './dto/create-cats.dto';
-import { UpdateCatsExampleDto } from './dto/update-cats.dto';
+import { CreateCatsDto } from './dto/create-cats.dto';
+import { UpdateCatsDto } from './dto/update-cats.dto';
 
 /*
 All services can be/are providers
@@ -10,7 +10,7 @@ Injectable - Decorator attaches metadata, which declares that CatsService is a c
 */
 @Injectable()
 export class CatsService {
-    async create(createCatBody: CreateCatsExampleDto) {
+    async create(createCatBody: CreateCatsDto) {
         return 'This action adds a new catsExample';
     }
 
@@ -22,7 +22,7 @@ export class CatsService {
         return `This action returns a #${id} catsExample`;
     }
 
-    async update(id: number, updateCatsExampleDto: UpdateCatsExampleDto) {
+    async update(id: number, updateCatsDto: UpdateCatsDto) {
         return `This action updates a #${id} catsExample`;
     }
 

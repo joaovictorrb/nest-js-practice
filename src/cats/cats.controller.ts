@@ -10,8 +10,8 @@ import {
     Optional,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { CreateCatsExampleDto } from './dto/create-cats.dto';
-import { UpdateCatsExampleDto } from './dto/update-cats.dto';
+import { CreateCatsDto } from './dto/create-cats.dto';
+import { UpdateCatsDto } from './dto/update-cats.dto';
 import { Cat } from './interfaces/cat.interface';
 
 @Controller('cats') // <- Prefix http://localhost:3000/cats-example
@@ -27,7 +27,7 @@ export class CatsController {
      * createCatBody must be of type CreateCatsExampleDto
      * and it must obey it's properties
      */
-    async create(@Body() createCatBody: CreateCatsExampleDto) {
+    async create(@Body() createCatBody: CreateCatsDto) {
         return this.catsService.create(createCatBody);
     }
 
@@ -44,9 +44,9 @@ export class CatsController {
     @Patch(':id')
     async update(
         @Param('id') id: string,
-        @Body() updateCatsExampleDto: UpdateCatsExampleDto,
+        @Body() updateCatsDto: UpdateCatsDto,
     ) {
-        return this.catsService.update(+id, updateCatsExampleDto);
+        return this.catsService.update(+id, updateCatsDto);
     }
 
     @Delete(':id')
