@@ -109,3 +109,22 @@ import { User } from './users/entities/user.entity';
 })
 export class AppModule {}
 ```
+
+## Middleware
+
+Middleware functions can perform the following tasks:
+
+-   execute any code.
+-   make changes to the request and the response objects.
+-   end the request-response cycle.
+-   call the next middleware function in the stack.
+-   if the current middleware function does not end the request-response cycle, it must call next() to pass control to the next middleware function. Otherwise, the request will be left hanging.
+
+### Applying middleware#
+
+There is no place for middleware in the @Module() decorator. Instead, we set them up using the configure() method of the module class. Modules that include middleware have to implement the NestModule interface. Let's set up the LoggerMiddleware at the AppModule level.
+
+### Middleware consumer
+
+The MiddlewareConsumer is a helper class. It provides several built-in methods to manage middleware.
+The forRoutes() method can take a single string, multiple strings, a RouteInfo object, a controller class and even multiple controller classes.
