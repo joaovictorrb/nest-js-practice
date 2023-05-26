@@ -8,11 +8,14 @@ import {
     Delete,
     Req,
     Optional,
+    UseFilters,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatsDto } from './dto/create-cats.dto';
 import { UpdateCatsDto } from './dto/update-cats.dto';
 import { Cat } from './interfaces/cat.interface';
+import { CustomForbiddenException } from 'src/common-examples/exceptions/custom.exception';
+import { HttpExceptionFilter } from 'src/common-examples/exceptions/filter/http-exception.filter';
 
 @Controller('cats') // <- Prefix http://localhost:3000/cats-example
 export class CatsController {
@@ -21,19 +24,45 @@ export class CatsController {
 
     //constructor(@Optional() private readonly catsService: CatsService) {}
 
-    @Post()
     /**
      * Body receives createCatBody
      * createCatBody must be of type CreateCatsExampleDto
      * and it must obey it's properties
      */
+    @Post()
+    @UseFilters(new HttpExceptionFilter()) // bind filter to request
     async create(@Body() createCatBody: CreateCatsDto) {
-        return this.catsService.create(createCatBody);
+        throw new CustomForbiddenException();
+        //return this.catsService.create(createCatBody);
     }
 
     @Get() //By using @Req, I am using Library-Specific == express
     async findAll(@Req() request: Request): Promise<Cat[]> {
-        return this.catsService.findAll();
+        try {
+            return this.catsService.findAll();
+        } catch (error) {
+            /*
+                Throwing standard exceptions
+                HttpException
+                    - Param1: String or Objects
+                    - Param2: status, defined by HttpStatus.Code
+                throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+            */
+            /*
+                Here's an example overriding the entire response body and providing an error cause:
+                throw new HttpException(
+                    {
+                        status: HttpStatus.FORBIDDEN,
+                        error: 'This is a custom message',
+                    },
+                    HttpStatus.FORBIDDEN,
+                    {
+                        cause: error,
+                    },
+                );
+            */
+            throw new CustomForbiddenException();
+        }
     }
 
     @Get(':id') // <- Prefix http://localhost:3000/cats-example:id
