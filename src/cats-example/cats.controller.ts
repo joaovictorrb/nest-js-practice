@@ -9,6 +9,7 @@ import {
     Req,
     Optional,
     UseFilters,
+    ParseIntPipe,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatsDto } from './dto/create-cats.dto';
@@ -66,7 +67,7 @@ export class CatsController {
     }
 
     @Get(':id') // <- Prefix http://localhost:3000/cats-example:id
-    async findOne(@Param('id') id: string) {
+    async findOne(@Param('id', ParseIntPipe) id: string) {
         return this.catsService.findOne(+id);
     }
 

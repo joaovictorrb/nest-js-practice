@@ -128,3 +128,24 @@ There is no place for middleware in the @Module() decorator. Instead, we set the
 
 The MiddlewareConsumer is a helper class. It provides several built-in methods to manage middleware.
 The forRoutes() method can take a single string, multiple strings, a RouteInfo object, a controller class and even multiple controller classes.
+
+## Pipes have two typical use cases:
+
+transformation: transform input data to the desired form (e.g., from string to integer)
+validation: evaluate input data and if valid, simply pass it through unchanged; otherwise, throw an exception
+
+Pipes run inside the exceptions zone. This means that when a Pipe throws an exception it is handled by the exceptions layer
+
+Nest comes with nine pipes available out-of-the-box:
+
+-   ValidationPipe
+-   ParseIntPipe
+-   ParseFloatPipe
+-   ParseBoolPipe
+-   ParseArrayPipe
+-   ParseUUIDPipe
+-   ParseEnumPipe
+-   DefaultValuePipe
+-   ParseFilePipe
+
+ParseIntPipe. This is an example of the transformation use case, where the pipe ensures that a method handler parameter is converted to a JavaScript integer
