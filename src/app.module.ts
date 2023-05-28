@@ -3,11 +3,22 @@ import { LoggerMiddleware } from './common-examples/middleware/logger.middleware
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats-example/cats.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guard-example/roles.guard';
 
+/*
+    cannot inject dependencies since this is done outside the context of any module. In order to solve this issue, you can set up a guard directly from any module using the following construction:
+*/
 @Module({
     imports: [CatsModule],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        AppService,
+        {
+            provide: APP_GUARD,
+            useClass: RolesGuard,
+        },
+    ],
 })
 export class AppModule implements NestModule {
     async configure(consumer: MiddlewareConsumer) {

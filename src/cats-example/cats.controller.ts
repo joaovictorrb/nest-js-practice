@@ -10,6 +10,8 @@ import {
     Optional,
     UseFilters,
     ParseIntPipe,
+    UseGuards,
+    SetMetadata,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatsDto } from './dto/create-cats.dto';
@@ -17,8 +19,11 @@ import { UpdateCatsDto } from './dto/update-cats.dto';
 import { Cat } from './interfaces/cat.interface';
 import { CustomForbiddenException } from 'src/common-examples/exceptions/custom.exception';
 import { HttpExceptionFilter } from 'src/common-examples/exceptions/filter/http-exception.filter';
+import { RolesGuard } from 'src/guard-example/roles.guard';
+import { Roles } from 'src/guard-example/roles.decorator';
 
 @Controller('cats') // <- Prefix http://localhost:3000/cats-example
+@UseGuards(RolesGuard)
 export class CatsController {
     // Provider injected
     constructor(@Optional() private readonly catsService: CatsService) {}
@@ -32,6 +37,7 @@ export class CatsController {
      */
     @Post()
     @UseFilters(new HttpExceptionFilter()) // bind filter to request
+    @Roles('admin') //@SetMetadata('roles', ['admin'])
     async create(@Body() createCatBody: CreateCatsDto) {
         throw new CustomForbiddenException();
         //return this.catsService.create(createCatBody);

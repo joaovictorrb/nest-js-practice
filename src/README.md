@@ -149,3 +149,10 @@ Nest comes with nine pipes available out-of-the-box:
 -   ParseFilePipe
 
 ParseIntPipe. This is an example of the transformation use case, where the pipe ensures that a method handler parameter is converted to a JavaScript integer
+
+## Guards
+
+Guards have a single responsibility. They determine whether a given request will be handled by the route handler or not, depending on certain conditions present at run-time.
+This is often referred to as authorization.
+
+-   Guards are executed after all middleware, but before any interceptor or pipe.
