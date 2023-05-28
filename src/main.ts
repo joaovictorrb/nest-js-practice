@@ -17,11 +17,14 @@ async function bootstrap() {
     global filter
         app.useGlobalFilters(new HttpExceptionFilter());
 
-     global guard
+    global guard
     
         In the case of hybrid apps the useGlobalGuards() method doesn't set up guards for gateways and micro services by default 
     
         app.useGlobalGuards(new RolesGuard());
+
+    global interceptor
+        app.useGlobalInterceptors(new LoggingInterceptor());
     */
     await app.listen(3000);
 }

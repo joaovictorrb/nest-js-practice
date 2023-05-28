@@ -12,6 +12,7 @@ import {
     ParseIntPipe,
     UseGuards,
     SetMetadata,
+    UseInterceptors,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatsDto } from './dto/create-cats.dto';
@@ -21,14 +22,15 @@ import { CustomForbiddenException } from 'src/common-examples/exceptions/custom.
 import { HttpExceptionFilter } from 'src/common-examples/exceptions/filter/http-exception.filter';
 import { RolesGuard } from 'src/guard-example/roles.guard';
 import { Roles } from 'src/guard-example/roles.decorator';
+import { LoggingInterceptor } from 'src/interceptor-example/loggin.interceptor';
 
 @Controller('cats') // <- Prefix http://localhost:3000/cats-example
 @UseGuards(RolesGuard)
+@UseInterceptors(LoggingInterceptor)
 export class CatsController {
     // Provider injected
-    constructor(@Optional() private readonly catsService: CatsService) {}
-
     //constructor(@Optional() private readonly catsService: CatsService) {}
+    constructor(@Optional() private readonly catsService: CatsService) {}
 
     /**
      * Body receives createCatBody

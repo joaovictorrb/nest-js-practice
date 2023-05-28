@@ -156,3 +156,15 @@ Guards have a single responsibility. They determine whether a given request will
 This is often referred to as authorization.
 
 -   Guards are executed after all middleware, but before any interceptor or pipe.
+
+## Interceptors
+
+Interceptors have a set of useful capabilities which are inspired by the Aspect Oriented Programming (AOP) technique. They make it possible to:
+
+-   bind extra logic before / after method execution
+-   transform the result returned from a function
+-   transform the exception thrown from a function
+-   extend the basic function behavior
+-   completely override a function depending on specific conditions (e.g., for caching purposes)
+
+Consider, for example, an incoming POST /cats request. This request is destined for the create() handler defined inside the CatsController. If an interceptor which does not call the handle() method is called anywhere along the way, the create() method won't be executed. Once handle() is called (and its Observable has been returned), the create() handler will be triggered. And once the response stream is received via the Observable, additional operations can be performed on the stream, and a final result returned to the caller.
