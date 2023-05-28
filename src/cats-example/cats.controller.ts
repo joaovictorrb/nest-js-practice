@@ -21,7 +21,7 @@ import { Cat } from './interfaces/cat.interface';
 import { CustomForbiddenException } from 'src/common-examples/exceptions/custom.exception';
 import { HttpExceptionFilter } from 'src/common-examples/exceptions/filter/http-exception.filter';
 import { RolesGuard } from 'src/guard-example/roles.guard';
-import { Roles } from 'src/guard-example/roles.decorator';
+import { Roles } from 'src/decorators-example/roles.decorator';
 import { LoggingInterceptor } from 'src/interceptor-example/loggin.interceptor';
 
 @Controller('cats') // <- Prefix http://localhost:3000/cats-example
@@ -37,12 +37,13 @@ export class CatsController {
      * createCatBody must be of type CreateCatsExampleDto
      * and it must obey it's properties
      */
-    @Post()
+    @Post('new')
     @UseFilters(new HttpExceptionFilter()) // bind filter to request
-    @Roles('admin') //@SetMetadata('roles', ['admin'])
+    // @Roles('admin') //@SetMetadata('roles', ['admin'])
     async create(@Body() createCatBody: CreateCatsDto) {
-        throw new CustomForbiddenException();
-        //return this.catsService.create(createCatBody);
+        console.log('new cat created');
+        // throw new CustomForbiddenException();
+        // return this.catsService.create(createCatBody);
     }
 
     @Get() //By using @Req, I am using Library-Specific == express
@@ -74,7 +75,7 @@ export class CatsController {
         }
     }
 
-    @Get(':id') // <- Prefix http://localhost:3000/cats-example:id
+    @Get(':id') // <- Prefix http://localhost:3000/cats/:id
     async findOne(@Param('id', ParseIntPipe) id: string) {
         return this.catsService.findOne(+id);
     }

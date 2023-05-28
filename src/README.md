@@ -168,3 +168,7 @@ Interceptors have a set of useful capabilities which are inspired by the Aspect 
 -   completely override a function depending on specific conditions (e.g., for caching purposes)
 
 Consider, for example, an incoming POST /cats request. This request is destined for the create() handler defined inside the CatsController. If an interceptor which does not call the handle() method is called anywhere along the way, the create() method won't be executed. Once handle() is called (and its Observable has been returned), the create() handler will be triggered. And once the response stream is received via the Observable, additional operations can be performed on the stream, and a final result returned to the caller.
+
+## Decorators
+
+Decorator is an expression which returns a function and can take a target, name and property descriptor as arguments.
